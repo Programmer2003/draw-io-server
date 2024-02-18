@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 const isDev = app.settings.env === 'development'
 const URL = isDev ? 'http://localhost:3000' : 'https://draw-io-eight.vercel.app'
-app.use(cors({origin: URL}))
+app.use(cors({ origin: URL }))
 const httpServer = createServer(app);
 const io = new Server(httpServer, { cors: URL });
 
@@ -21,8 +21,13 @@ io.on("connection", (socket) => {
     socket.broadcast.emit('drawLine' + arg.id, arg)
   })
 
+  socket.on('drawPolling', (arg) => {
+    console.log(arg);
+    socket.broadcast.emit('drawPolling' + arg.id, arg)
+  })
+
   socket.on('changeConfig', (arg) => {
-    socket.broadcast.emit('changeConfig'+arg.id, arg)
+    socket.broadcast.emit('changeConfig' + arg.id, arg)
   })
 });
 

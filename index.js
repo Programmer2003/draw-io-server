@@ -14,7 +14,6 @@ io.on("connection", (socket) => {
   console.log("server connected")
 
   socket.on('drawPolling', (arg) => {
-    console.log(arg);
     socket.broadcast.emit('drawPolling' + arg.id, arg)
   })
 });
